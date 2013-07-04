@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+<h1>Our main page</h1>
+	<a href="{% url 'accounts:registration' %}">Registration</a>
+{% endblock %}
