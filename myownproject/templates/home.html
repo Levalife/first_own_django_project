@@ -5,5 +5,10 @@
 {% block content %}
 <h1>Our main page</h1>
 	<a href="{% url 'accounts:registration' %}">Registration</a>
-	<a href="{% url 'accounts:login' %}">Login</a>
+	
+	{% if news %}
+		{% for one in news %}
+			<p><a href="{% url 'news:newspage' one.id %}">{{ one.title }}</p>
+		{% endfor %}
+	{% endif %}
 {% endblock %}

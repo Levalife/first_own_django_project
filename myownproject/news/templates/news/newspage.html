@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ news.title }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ news.title }}</h1>
+<p>{{ news.category }}</p>
+<p>{{ news.author }}</p>
+<p>{{ news.news_body}}</p>
+<p>{{ news.pub_date }}</p>
+
+{% if tags %}
+	{% for tag in tags %}
+		{{ tag }}
+	{% endfor %}
+{% endif %}
+
+{% endblock %}

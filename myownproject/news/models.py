@@ -10,6 +10,7 @@ class Category(models.Model):
 
 class Tag(models.Model):
 	tag = models.CharField(max_length=30, blank=True)
+	
 
 	def __unicode__(self):
 		return self.tag

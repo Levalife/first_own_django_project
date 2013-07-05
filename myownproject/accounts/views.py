@@ -14,7 +14,6 @@ def registration(request):
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
 			new_user = form.save()
-			print form.cleaned_data['password']
 			messages.info(request, "You've successfully registered")
 			return HttpResponseRedirect('/')
 	else:
@@ -45,5 +44,5 @@ def login(request):
 		print 22222222222222222
 		form = LoginForm() 
 	return render(request, 'accounts/login.html', {'form': form})
-'''	
-	
+
+'''
