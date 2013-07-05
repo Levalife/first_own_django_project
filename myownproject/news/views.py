@@ -6,3 +6,6 @@ def news_page(request, news_id):
 	tags = news.tags.all()
 	return render(request, 'news/newspage.html', {'news': news, 'tags': tags})
 
+def add_news(request):
+	if request.method == "POST":
+		form = AddNewsForm(request.POST)

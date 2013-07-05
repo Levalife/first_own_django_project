@@ -3,6 +3,7 @@
 	<title>{% block title %} {% endblock %}</title>
 </HEAD>
 <BODY>
+	<a href={% url 'home' %}>Home page</a>
 	{% if messages %}
 	<ul>
 		{% for message in messages %}
