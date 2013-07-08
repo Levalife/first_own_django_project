@@ -20,7 +20,7 @@ class News(models.Model):
 	category = models.ForeignKey(Category)
 	author = models.ForeignKey(User)
 	news_body = models.CharField(max_length=5000)
-	pub_date = models.DateField(default = datetime.datetime.now())
+	pub_date = models.DateField('publication date',default = datetime.datetime.now())
 	tags = models.ManyToManyField(Tag, blank=True)
 
 	def __unicode__(self):

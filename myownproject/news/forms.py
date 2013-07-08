@@ -1,9 +1,12 @@
-from django import forms
+from django.forms import ModelForm
 import datetime
 
-class AddNewsForm(forms.Form):
-	title
-	category
-	news_body
-	pub_date = forms.DateTimeField()
-	tags
+
+from models import *
+
+
+class AddNewsForm(ModelForm):
+	class Meta():
+		model = News
+		exclude = ('author',)
+		
