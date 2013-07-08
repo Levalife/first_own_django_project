@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from models import News, Category
-from forms import AddNewsForm
+from models import News, Category, Tag
+from forms import AddNewsForm, AddTagsForm
 
 def news_page(request, news_id):
 	news = News.objects.get(pk=news_id)
@@ -13,20 +13,24 @@ def news_page(request, news_id):
 
 @login_required
 def add_news(request):
-	cats = Category.objects.all()
 	if request.method == "POST":
 		form = AddNewsForm(request.POST)
-		
-		
-		##news = form (request.POST['title'], request.POST['category'], request.user, request.POST['news_body'], request.POST['pub_date'], request.POST['tags'])
+		tform = AddTagsForm(request.POST or None)
 		if form.is_valid():
 			news = form.save(commit=False)
+			tags = request.POST['tags'].split()
 			news.author = request.user
 			news.save()
+			for tag in tags:
+				new_tag = Tag(tag=tag)
+				if Tag.objects.filter(tag=new_tag).exists():
+					new_tag= Tag.objects.get(tag=tag)
+				else:
+					new_tag.save()
+				news.tags.add(new_tag)
 			messages.info(request, "You've successfully added news")
 			return HttpResponseRedirect('/')
 		else:
-			print form['category']
 			messages.info(request, "Fill all fields")
 	else:
 		form = AddNewsForm()
