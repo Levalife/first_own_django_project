@@ -2,9 +2,10 @@ from django import forms
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate, logout, login as auth_login
+from django.contrib.auth import authenticate, logout as auth_logout, login as auth_login
+
 
 
 from accounts.forms import LoginForm
@@ -36,4 +37,10 @@ def login(request):
 	else:
 		form = LoginForm() 
 	return render(request, 'accounts/login.html', {'form': form})
+
+def logout(request):
+	auth_logout(request)
+	print 111111111111111111111111111111
+	messages.info(request, "You've successfully logged out")
+	return HttpResponseRedirect('/')
 
