@@ -9,7 +9,8 @@ from forms import AddNewsForm, AddTagsForm, EditNewsForm
 def news_page(request, news_id):
 	news = News.objects.get(pk=news_id)
 	tags = news.tags.all()
-	return render(request, 'news/newspage.html', {'news': news, 'tags': tags, 'user': request.user})
+	category = news.category
+	return render(request, 'news/news_page.html', {'news': news, 'tags': tags, 'category': category, 'user': request.user})
 
 @login_required
 def add_news(request):
@@ -49,3 +50,13 @@ def edit_news(request, news_id):
 	else:
 		form = EditNewsForm(instance = news)
 	return render(request, 'news/edit_news.html', {'form': form})
+
+def news_by_tag(request, tag_id):
+	tag = Tag.objects.get(pk=tag_id)
+	news = tag.news_set.all()
+	return render(request, 'news/news_by_tag.html', {'tag': tag, 'news': news})
+
+def news_by_cat(request, category_id):
+	category = Category.objects.get(pk=category_id)
+	news = category.news_set.all()
+	return render(request, 'news/news_by_cat.html', {'category': category, 'news': news})

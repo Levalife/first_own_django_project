@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}News by category{% endblock%}
+{% block content %}
+{% for n in news %}
+	<p><a href="{% url 'news:newspage' n.id %}"> {{n.title}} </a></p>
+{% endfor %}
+{% endblock %}

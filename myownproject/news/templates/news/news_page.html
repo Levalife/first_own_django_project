@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ news.title }}{% endblock %}
+
+{% block content %}
+
+<h1>{{ news.title }}</h1>
+<a href="{% url 'news:category' category.id %}"><p>{{ news.category }}</p></a>
+<p>{{ news.author }}</p>
+<p>{{ news.news_body}}</p>
+<p>{{ news.pub_date }}</p>
+
+{% if tags %}
+	Tags:
+	{% for tag in tags %}
+		<a href="{% url 'news:tag' tag.id %}">{{ tag }}</a>
+	{% endfor %}
+{% endif %}
+
+{% if news.author == user %}
+	<p><a href="{% url 'news:editnews' news.id %}">Edit news</a></p>
+{% endif %}
+	
+{% endblock %}
