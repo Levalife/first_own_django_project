@@ -4,12 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 from models import News, Category, Tag
-from forms import AddNewsForm, AddTagsForm
+from forms import AddNewsForm, AddTagsForm, EditNewsForm
 
 def news_page(request, news_id):
 	news = News.objects.get(pk=news_id)
 	tags = news.tags.all()
-	return render(request, 'news/newspage.html', {'news': news, 'tags': tags})
+	return render(request, 'news/newspage.html', {'news': news, 'tags': tags, 'user': request.user})
 
 @login_required
 def add_news(request):
@@ -36,7 +36,16 @@ def add_news(request):
 		form = AddNewsForm()
 	return render(request, 'news/add_news.html', {'form': form})
 
-#def edit_news(request, news_is):
-#	news = news.objects.get(pk=news_id)
-#	form = EditNewsForm(request.POST, instance = news)
-#	form.save()
+def edit_news(request, news_id):
+	news = News.objects.get(pk=news_id)
+	if request.method == "POST":
+		form = EditNewsForm(request.POST, instance = news)
+		if form.is_valid():
+			news = form.save()
+			messages.info(request, 'Your changes successfully saved')
+			return HttpResponseRedirect('/news/%s/' %news.id)
+		else:
+			messages.info(request, "Fill all fields")
+	else:
+		form = EditNewsForm(instance = news)
+	return render(request, 'news/edit_news.html', {'form': form})

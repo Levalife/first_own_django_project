@@ -16,4 +16,8 @@
 	{% endfor %}
 {% endif %}
 
+{% if news.author == user %}
+	<a href="{% url 'news:editnews' news.id %}">Edit news</a>
+{% endif %}
+	
 {% endblock %}
