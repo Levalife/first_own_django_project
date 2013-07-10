@@ -40,7 +40,6 @@ def login(request):
 
 def logout(request):
 	auth_logout(request)
-	print 111111111111111111111111111111
 	messages.info(request, "You've successfully logged out")
 	return HttpResponseRedirect('/')
 

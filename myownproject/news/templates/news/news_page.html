@@ -20,5 +20,21 @@
 {% if news.author == user %}
 	<p><a href="{% url 'news:editnews' news.id %}">Edit news</a></p>
 {% endif %}
-	
+
+{% if comments.exists %}
+	{% for comment in comments %}
+		<p> {{ comment.author }}</p>
+		<p> {{ comment.comment_body }}</p>
+		<p> {{ comment.pub_date }}</p>
+	</br>
+	{% endfor %}
+{% endif %}
+{% if user.is_authenticated %}
+	<p>Add your comment:</p>
+	<form action="{% url 'news:newspage' news.id %}" method='post'>
+		{% csrf_token %}
+		{{ form.comment_body }} <br/>
+		<input type='submit' value='Comment' />
+	</form>
+{% endif %}
 {% endblock %}
